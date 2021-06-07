@@ -1,0 +1,41 @@
+<p></p>
+<form action="/search" method="get">
+  <input name="query" value="<%= params[:query] %>"/>
+  <button type="submit">Search</button>
+</form>
+<h2 class="content-subhead">Table of Contents</h2>
+
+<!-- <% if params[:query] %> -->
+<% if @results.empty? %>
+  <p>Sorry, no matches were found.</p>
+<% else %>
+  <h2 class="content-subhead">Results for '<%= params[:query]%>'</h2>
+
+  <ul>
+    <% @results.each do |result| %>
+      <li>
+        <h4><%= result[:name] %></h4>
+        <ul>
+          <% result[:paragraphs].each do |index, text| %>
+            <li>
+              <a href="/chapters/<%= result[:number] %>#paragraph<%= index %>">
+                <%= highlight(text, params[:query]) %>
+              </a>
+            </li>
+          <% end %>
+        </ul>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+<!-- <% end %> -->
+<div class="pure-menu">
+  <ul class="pure-menu-list">
+    <% @toc.each_with_index do |chapter, idx| %>
+      <li class="pure-menu-item">
+        <a href="/chapters/<%= idx + 1 %>" class="pure-menu-link"><%= chapter %></a>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
