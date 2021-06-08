@@ -46,7 +46,6 @@ helpers do
     text.gsub(term, %(<strong><em>#{term}</em></strong>))
   end
 
-
 end
 
 
